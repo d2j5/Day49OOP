@@ -5,7 +5,7 @@ public class Main {
         BankAccount bankAccount = new BankAccount("Mark", 500);
 
         //
-         System.out.println("The balance is: "+bankAccount.getBalance());
+        System.out.println("The balance is: "+bankAccount.getBalance());
          bankAccount.deposit(200);
         System.out.println("The new balance after your deposit is: "+bankAccount.getBalance());
         bankAccount.withdrawal(100);
@@ -19,7 +19,9 @@ public class Main {
         bankAccount2.printAccountDetails();
         bankAccount3.printAccountDetails();
 
-
+        Product gold = new Product("gold",80,20);
+        gold.printProduct();
+        gold.totalCost();
     }
 
 }
