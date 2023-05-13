@@ -95,9 +95,7 @@ public class Main {
                             break;
                         }
                     }
-                    if (!accountToFound) {
-                        System.out.println("Account doesn't exist");
-                    }
+
                 } else {
                     System.out.println("Invalid account number");
                 }
