@@ -1,29 +1,98 @@
 package BankAccount2;
-
-import ClassObjectConstructors.BankAccount;
-import ClassObjectConstructors.Product;
+import java.util.Scanner;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
-        ClassObjectConstructors.BankAccount bankAccount = new ClassObjectConstructors.BankAccount("Mark", 500);
+        List<BankAccount> accountList = new ArrayList<>();
+        BankAccount account1 = new BankAccount("Felipe", 1000000, 1);
+        BankAccount account2 = new BankAccount("Singapore", 1000000, 2);
+        accountList.add(account1);
+        accountList.add(account2);
 
-        //
-        System.out.println("The balance is: "+bankAccount.getBalance());
-        bankAccount.deposit(200);
-        System.out.println("The new balance after your deposit is: "+bankAccount.getBalance());
-        bankAccount.withdrawal(100);
-        System.out.println("My account balance is: "+bankAccount.getBalance());
-        bankAccount.printAccountDetails();
+        Scanner userInput = new Scanner(System.in);
 
-        ClassObjectConstructors.BankAccount bankAccount2 = new ClassObjectConstructors.BankAccount("Peter", 5000);
-        ClassObjectConstructors.BankAccount bankAccount3 = new BankAccount("Maria", 300);
-        bankAccount2.withdrawal(100);
-        bankAccount3.deposit(100);
-        bankAccount2.printAccountDetails();
-        bankAccount3.printAccountDetails();
+        while(true){
+            System.out.println("Are you an existing customer? (-1 to exit)");
+            System.out.println("1. Yes");
+            System.out.println("2. No");
+            int choice = userInput.nextInt();
 
-        Product gold = new Product("gold",80,20);
-        gold.printProduct();
-        gold.totalCost();
+            if (choice == 1) {
+                System.out.println("Enter the account number: {Your choices are 1 or 2 for grading purposes}");
+                int accountNumber = userInput.nextInt();
+
+                for (BankAccount account : accountList) {
+                    if (account.getAccountNumber() == accountNumber) {
+                        mainMenu(account, accountList);
+                        break;
+                    }
+                }
+                break;
+
+            } else if (choice == 2) {
+                BankAccount newAccount = new BankAccount();
+                accountList.add(newAccount);
+                System.out.println("");
+                mainMenu(newAccount, accountList);
+                break;
+            } else if (choice == -1) {
+                System.out.println("Have a nice day!! Goodbye!");
+                break;
+            } else {
+                System.out.println("Invalid choice");
+            }
+        }
+    }
+
+    public static void mainMenu(BankAccount account, List<BankAccount> accountList){
+        Scanner userInput = new Scanner(System.in);
+        System.out.println("Welcome " + account.getHolderName() + "!");
+        while (true){
+            System.out.println("Welcome to the Main Menu, what would you like to do today?");
+            System.out.println("1. Account Balance");
+            System.out.println("2. Withdraw");
+            System.out.println("3. Deposit");
+            System.out.println("4. Make a Transfer to another account");
+            System.out.println("0. Exit");
+            int choice = userInput.nextInt();
+
+            if (choice == 1) {
+                account.printAccountDetails();
+
+            } else if (choice == 2) {
+                Scanner prompt = new Scanner(System.in);
+                System.out.println("How much would you like to withdraw?");
+                double amount = prompt.nextDouble();
+                account.withdrawal(amount);
+
+            } else if (choice == 3) {
+                Scanner prompt = new Scanner(System.in);
+                System.out.println("How much would you like to deposit?");
+                double amount = prompt.nextDouble();
+                account.deposit(amount);
+
+            } else if (choice == 4) {
+                Scanner prompt = new Scanner(System.in);
+                System.out.println("Please enter the account number you would like to transfer to? {Your choices are 1 or 2 for grading purposes}");
+                int accountNumber = prompt.nextInt();
+
+                System.out.println("How much would you like to transfer?");
+                double amount = prompt.nextDouble();
+
+                for (BankAccount accountTo : accountList) {
+                    if (accountTo.getAccountNumber() == accountNumber) {
+                        account.bankTransfer(accountTo, amount);
+                        break;
+                    }
+                }
+            } else if (choice == 0) {
+                System.out.println("Have a nice day!! Goodbye!");
+                break;
+            } else {
+                System.out.println("Invalid choice");
+            }
+        }
     }
 }
