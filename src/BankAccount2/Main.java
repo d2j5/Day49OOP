@@ -20,15 +20,19 @@ public class Main {
             int choice = userInput.nextInt();
 
             if (choice == 1) {
-                System.out.println("Enter the account number: {Your choices are 1 or 2 for grading purposes}");
+                System.out.println("Enter the account number: {Your choices are 1 or 2}");
                 int accountNumber = userInput.nextInt();
+                boolean accountFound = false;
+
 
                 for (BankAccount account : accountList) {
                     if (account.getAccountNumber() == accountNumber) {
                         mainMenu(account, accountList);
+                        accountFound = true;
                         break;
                     }
                 }
+
                 break;
 
             } else if (choice == 2) {
@@ -75,19 +79,29 @@ public class Main {
 
             } else if (choice == 4) {
                 Scanner prompt = new Scanner(System.in);
-                System.out.println("Please enter the account number you would like to transfer to? {Your choices are 1 or 2 for grading purposes}");
+                System.out.println("Please enter the account number you would like to transfer to? {Your choices are 1 or 2}");
                 int accountNumber = prompt.nextInt();
 
-                System.out.println("How much would you like to transfer?");
-                double amount = prompt.nextDouble();
 
-                for (BankAccount accountTo : accountList) {
-                    if (accountTo.getAccountNumber() == accountNumber) {
-                        account.bankTransfer(accountTo, amount);
-                        break;
+                if (accountNumber == 1 || accountNumber == 2) {
+                    System.out.println("How much would you like to transfer?");
+                    double amount = prompt.nextDouble();
+
+                    boolean accountToFound = false;
+                    for (BankAccount accountTo : accountList) {
+                        if (accountTo.getAccountNumber() == accountNumber) {
+                            account.bankTransfer(accountTo, amount);
+                            accountToFound = true;
+                            break;
+                        }
                     }
+                    if (!accountToFound) {
+                        System.out.println("Account doesn't exist");
+                    }
+                } else {
+                    System.out.println("Invalid account number");
                 }
-            } else if (choice == 0) {
+                        } else if (choice == 0) {
                 System.out.println("Have a nice day!! Goodbye!");
                 break;
             } else {
